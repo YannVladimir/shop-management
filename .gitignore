@@ -1,0 +1,7 @@
+*.o
+*.exe
+*.out
+.vscode/*
+!.vscode/tasks.json
+.DS_Store
+Thumbs.db

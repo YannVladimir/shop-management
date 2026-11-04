@@ -67,13 +67,15 @@ class Product{
     {
         string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        string uniqueCode = "";
-        auto now = system_clock::now();
-        auto millis = duration_cast<milliseconds>(now.time_since_epoch());
-        mt19937 generator(millis.count());
+        // static: seeded once per process instead of once per call. Seeding a
+        // fresh generator from millisecond-resolution time on every call meant
+        // two codes generated within the same millisecond (easy in a tight
+        // loop) came out identical, defeating the point of the function.
+        static mt19937 generator(random_device{}());
         uniform_int_distribution<int> distribution(0, 100000);
 
-        // generate 10 characters long unique string
+        string uniqueCode = "";
+        // generate 11 characters long unique string
 
         for (int i = 0; i <= 10; i++)
         {
